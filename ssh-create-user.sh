@@ -20,8 +20,11 @@ fi
 cat $KEYPUB | \
   ssh $SUPERUSER@$SERVER \
   " useradd -m -s /bin/bash -U $NEWUSER ;
-    mkdir ~$NEWUSER/.ssh 
+    mkdir ~$NEWUSER/.ssh ;
     tee -a ~$NEWUSER/.ssh/authorized_keys || exit 1"
+
+ssh $SUPERUSER@$SERVER \
+    "cat ~$NEWUSER/.ssh/authorized_keys"
 
 if [ $? -ne 0 ]; then
    echo "Failed"
